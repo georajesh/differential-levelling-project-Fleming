@@ -84,7 +84,7 @@ except Exception as message:
 
 # Calculations
 
-PointElevationList = [] # Creates an empty list to append calculated elevation into
+PointElevationList = [StartingElevation] # Creates an empty list to append calculated elevation into
 InstrumentHeightList = [] # Creates an empty list to append calculated height of instrument into
 
 for index in range(len(PointElevationList)): # Creates an index within the range of the above inputs
