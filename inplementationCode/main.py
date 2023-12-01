@@ -3,7 +3,7 @@ import math                                 # 'math' is needed to run trignometr
 import csv                                  # '#csv' is needed to receive outputs as .csv file format
 import os                                   # 'os' is needed for getcwd (current working directory)
 # import arcpy                                # arcpy is used for spatial outputs to be used on ArcGIS
-
+import string                                 #'import is needed for string manipulation 
 # A function to determine elevation and height of the instrument for surverying calculations
 def ElevationCalculator(BS, FS, SElev):
     Elev = SElev
@@ -39,6 +39,47 @@ def write_to_csv(StationList, XList, YList, BacksightList, InstrumentHeightList,
             }
             # Write the row to the CSV file
             writer.writerow(rowdict)
+
+Year = str(input("Please Enter the year (YYYY)"))
+Month =str(input("Please Enter the Month (MM)"))
+Day = str(input("Please Enter the Day (DD)"))
+
+############## String Manipulation ###########
+
+test values
+# ProjectName='Test project'
+# WeatherCondition= 'Cloudy'
+# IntrumentName = 'Tripod,rod,level'
+
+#String manipulation to capitlize project name 
+Project_Capitalize=string.capwords(ProjectName)
+
+#String manipulation for Date
+monthdictionary = {'01': 'Jan.','02': 'Feb.','03': 'March','04': 'April','05': 'May','06': 'June','07': 'July','08': 'Aug.','09': 'Sept','10': 'Oct.','11': 'Nov.','12': 'Dec.'}
+Date =monthdictionary[Month] + " " + Day + ',' + Year 
+
+#String manipulation weather
+weather=string.capwords(WeatherCondition)
+
+#string manipulation on intrument used 
+Instrument_comma=IntrumentName.replace(',',', ')
+CapitizeInstrument=string.capwords(Instrument_comma)
+Instruments=CapitizeInstrument.split(',')
+
+############## Meta data to txt file ###########
+
+#Meta data to txt file
+fo1 = open('README.txt', 'w')
+fo1.write('Project Name: ' + Project_Capitalize+'\n'\
+        + 'Date of Survey: ' + Date + '\n' \
+        + 'Weather: ' + weather + '\n' \
+        + 'Intruments Used: '+ '\n'\
+        +' ')
+# fo1= open('README.txt', 'a') 
+fo1.write('\n'.join(Instruments))
+fo1.close()
+
+print("File Exported")
 
 # Input Section
 StartingElevation = float(input("Please enter the Starting Elevation of the Survey: ")) # Creates Starting eleveation as a reference for subsequent calculations
