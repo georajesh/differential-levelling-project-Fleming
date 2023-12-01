@@ -26,7 +26,7 @@ def write_to_csv(StationList, XList, YList, BacksightList, InstrumentHeightList,
         writer.writeheader()
 
         # Iterate over the lists of values and write each row
-        for i in range(len(PointElevationList)):
+        for i in range(len(InstrumentHeightList)):
             # Create a dictionary for the current row
             rowdict = {
                 'Station' : StationList[i],
@@ -84,10 +84,10 @@ except Exception as message:
 
 # Calculations
 
-PointElevationList = [StartingElevation] # Creates an empty list to append calculated elevation into
+PointElevationList = [] # Creates an empty list to append calculated elevation into
 InstrumentHeightList = [] # Creates an empty list to append calculated height of instrument into
 
-for index in range(len(PointElevationList)): # Creates an index within the range of the above inputs
+for index in range(len(InstrumentHeightList)): # Creates an index within the range of the above inputs
     Station = StationList[index]    # retrives the station from the list for calculations
     Longitude = XList[index]    # retrives the XCoordinates from the list for calculations
     Latitude = YList[index] # retrives the YCoordinates from the list for calculations
