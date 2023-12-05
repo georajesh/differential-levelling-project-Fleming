@@ -1,9 +1,34 @@
+## VerticalSurveyCalculator.py
+## Last modified on December 3rd, 2023
+## Authored by: 
+## Matthew De Matos - ArcPy function to export data as layout
+## Rajesh Dulal 
+## Emmanuel Ignatius
+## Alanah Reveler
+## Priyanka Rathod
+
+## Purpose
+#This program allows a user to input data collected during a vertical survey (backsight, foresight,
+#starting elevation, coordinates) from any number of points and calculates the elevation at each point. 
+#Then it exports this data into a .csv file to be represented in a chart, which is then used to create a 
+#shapefile and plot the points onto a simple layout exported as a PDF.
+
+## Assumptions
+#The user has accurate coordinate data for the benchmarks. 
+#The user will be running the program from a folder that is structured with the necessary elements for 
+#the program to run (this would be provided to the user as a .zip file containing the .aprx file and 
+#PointData folder).
+
+## Limitations
+# To export the map, the user must be able to use ArcGIS Pro
+
 # first, import modules needed for the program to run. 
 import math                                 # 'math' is needed to run trignometric calculations
 import csv                                  # '#csv' is needed to receive outputs as .csv file format
 import os                                   # 'os' is needed for getcwd (current working directory)
-# import arcpy                                # arcpy is used for spatial outputs to be used on ArcGIS
+import arcpy                                # arcpy is used for spatial outputs to be used on ArcGIS
 import string                                 #'import is needed for string manipulation 
+
 # A function to determine elevation and height of the instrument for surverying calculations
 def ElevationCalculator(BS, FS, SElev):
     Elev = SElev
@@ -40,13 +65,63 @@ def write_to_csv(StationList, XList, YList, BacksightList, InstrumentHeightList,
             # Write the row to the CSV file
             writer.writerow(rowdict)
 
+
+### Creates a function to derive shapefile from user input and creates PDF with a simple map layout ##
+def exportPDF():
+    # Get current directory for geodatabase and convert csv file to point shapefile #
+    cwd = os.getcwd()
+
+    arcpy.env.workspace = cwd + r"\PSPGrp5.gdb"
+    pointfile = arcpy.management.XYTableToPoint(cwd + r"\data.csv", r"\PointData\surveypoints.shp", "Longitude", "Latitude")
+    arcpy.conversion.FeatureClassToGeodatabase(cwd + r"\PointData\surveypoints.shp", cwd + "\PSPGrp5.gdb")
+
+    # Set project to work on layout and create layer file from shapefile #
+    aprx = arcpy.mp.ArcGISProject(cwd + r"\PSPGrp5.aprx")
+
+    in_layer = cwd + r"\PSPGrp5.gdb\surveypoints" 
+    layers_out = "Benchmarks" 
+    output_location = cwd + r"\{}.lyrx".format(layers_out)
+
+    arcpy.MakeFeatureLayer_management(in_layer, "Benchmarks")
+    arcpy.SaveToLayerFile_management ("Benchmarks" , layers_out)
+
+    # Add layer file to map at the top of the content pane #
+    insertLyr = arcpy.mp.LayerFile(output_location)
+    m = aprx.listMaps("*")[0]
+    refLyr = m.listLayers("*")[0]
+    m.insertLayer(refLyr, insertLyr, "BEFORE")
+
+    # Save so newly created layer is retrievable by program #
+    aprx.save()
+
+    # Apply symbology to the point layer ** NOT FULLY WORKING YET #
+    lyr = m.listLayers("Benchmarks")[0]
+    sym = lyr.symbology
+    # if lyr.isFeatureLayer and hasattr(sym, "renderer"):
+    sym.renderer.symbol.applySymbolFromGallery("Circle 4")
+    sym.renderer.symbol.size = 12
+    lyr.symbology = sym
+
+    # Set map frame extent to point layer and zoom out so the points are not at the edges of the frame #
+    lyt = aprx.listLayouts("PointLayout")[0]
+    mf = lyt.listElements("mapframe_element", "MyMapFrame")[0]
+    mf.camera.setExtent(mf.getLayerExtent(lyr))
+    m.defaultCamera = mf.camera
+    mf.camera.scale *= 1.08
+
+    # Export map as PDF and return completion statement
+    lyt.exportToPDF(cwd + r"\PlottedPoints.pdf")
+    aprx.save()
+    del aprx
+    return print("Map successfully exported as a PDF.")
+
 Year = str(input("Please Enter the year (YYYY)"))
 Month =str(input("Please Enter the Month (MM)"))
 Day = str(input("Please Enter the Day (DD)"))
 
 ############## String Manipulation ###########
 
-test values
+# test values
 # ProjectName='Test project'
 # WeatherCondition= 'Cloudy'
 # IntrumentName = 'Tripod,rod,level'
@@ -144,5 +219,8 @@ for index in range(len(BacksightList)): # Creates an index within the range of t
 # Print a message indicating that the file was written successfully
 # Call the function to write the lists of values to a CSV file
 csv_output = write_to_csv(StationList, XList, YList, BacksightList, InstrumentHeightList, ForesightList, PointElevationList)
-    
+
+# Call function to create shapefile and export layout as PDF
+exportPDF()
+
 print("Data in CSV format generated.")
