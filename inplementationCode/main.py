@@ -27,8 +27,9 @@ import math                                 # 'math' is needed to run trignometr
 import csv                                  # '#csv' is needed to receive outputs as .csv file format
 import os                                   # 'os' is needed for getcwd (current working directory)
 import arcpy                                # arcpy is used for spatial outputs to be used on ArcGIS
-import string                                 #'import is needed for string manipulation 
-
+import string                               #'import is needed for string manipulation 
+import turtle                               # import turtle module to draw traverse using turtle
+       
 # A function to determine elevation and height of the instrument for surverying calculations
 def ElevationCalculator(BS, FS, SElev):
     Elev = SElev
@@ -56,7 +57,7 @@ def write_to_csv(StationList, XList, YList, BacksightList, InstrumentHeightList,
             rowdict = {
                 'Station' : StationList[i],
                 'Longitude' : XList[i],
-                'Latitude' : YList[i],
+                'Latitude' : YList[j],
                 'Backsight': BacksightList[i],
                 'InstrumentHeight': InstrumentHeightList[i],
                 'Foresight': ForesightList[i],
@@ -125,6 +126,13 @@ IntrumentName = str(input("Please enter the name of the instrument:"))
 Year = str(input("Please Enter the year (YYYY)"))
 Month =str(input("Please Enter the Month (MM)"))
 Day = str(input("Please Enter the Day (DD)"))
+
+############## String Manipulation ###########
+
+# test values
+# ProjectName='Test project'
+# WeatherCondition= 'Cloudy'
+# IntrumentName = 'Tripod,rod,level'
 
 #String manipulation to capitlize project name 
 Project_Capitalize=string.capwords(ProjectName)
@@ -224,4 +232,4 @@ print("Data in CSV format generated.")
 # Call function to create shapefile and export layout as PDF
 exportPDF()
 
-
+print("Data in CSV format generated.")
