@@ -273,7 +273,7 @@ print("Data in CSV format generated.")
 
 # #Defining a function to draw the traverse
 # def draw_traverse(x,y):
-#     draw_traverse.goto(x,y)
+#     alex.goto(x,y)
 
 # #Positioning the turtle at the first point of the traverse
 # alex.penup()
