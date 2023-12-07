@@ -1,5 +1,0 @@
-Project Name: Vertical Survey
-Date of Survey: July 13,1996
-Weather: Cloudy
-Intruments Used: 
- Xps12
