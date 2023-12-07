@@ -71,14 +71,14 @@ def exportPDF():
     # Get current directory for geodatabase and convert csv file to point shapefile #
     cwd = os.getcwd()
 
-    arcpy.env.workspace = cwd + r"\PSPGrp5.gdb"
-    pointfile = arcpy.management.XYTableToPoint(cwd + r"\data.csv", r"\PointData\surveypoints.shp", "Longitude", "Latitude")
-    arcpy.conversion.FeatureClassToGeodatabase(cwd + r"\PointData\surveypoints.shp", cwd + "\PSPGrp5.gdb")
+    arcpy.env.workspace = cwd + r"PSPGroup5\PSPGrp5.gdb"
+    pointfile = arcpy.management.XYTableToPoint(cwd + r"data.csv", r"\PointData\surveypoints.shp", "Longitude", "Latitude")
+    arcpy.conversion.FeatureClassToGeodatabase(cwd + r"\PointData\surveypoints.shp", cwd + "PSPGroup5\PSPGrp5.gdb")
 
     # Set project to work on layout and create layer file from shapefile #
     aprx = arcpy.mp.ArcGISProject(cwd + r"\PSPGrp5.aprx")
 
-    in_layer = cwd + r"\PSPGrp5.gdb\surveypoints" 
+    in_layer = cwd + r"PSPGroup5\PSPGrp5.gdb" 
     layers_out = "Benchmarks" 
     output_location = cwd + r"\{}.lyrx".format(layers_out)
 
@@ -115,22 +115,22 @@ def exportPDF():
     del aprx
     return print("Map successfully exported as a PDF.")
 
+
+
+############## String Manipulation ###########
+ProjectName=str(input("Please enter your project title:"))
+print("Weather Condition\n Cloudy\n Sunny\n Snowy\n Rainy")
+WeatherCondition= str(input("Please select the weather condition"))
+IntrumentName = str(input("Please enter the name of the instrument:"))
 Year = str(input("Please Enter the year (YYYY)"))
 Month =str(input("Please Enter the Month (MM)"))
 Day = str(input("Please Enter the Day (DD)"))
-
-############## String Manipulation ###########
-
-# test values
-# ProjectName='Test project'
-# WeatherCondition= 'Cloudy'
-# IntrumentName = 'Tripod,rod,level'
 
 #String manipulation to capitlize project name 
 Project_Capitalize=string.capwords(ProjectName)
 
 #String manipulation for Date
-monthdictionary = {'01': 'Jan.','02': 'Feb.','03': 'March','04': 'April','05': 'May','06': 'June','07': 'July','08': 'Aug.','09': 'Sept','10': 'Oct.','11': 'Nov.','12': 'Dec.'}
+monthdictionary = {'01': 'January','02': 'February','03': 'March','04': 'April','05': 'May','06': 'June','07': 'July','08': 'August','09': 'September','10': 'October','11': 'November','12': 'December'}
 Date =monthdictionary[Month] + " " + Day + ',' + Year 
 
 #String manipulation weather
@@ -200,7 +200,7 @@ except Exception as message:
 
 # Calculations
 
-PointElevationList = [] # Creates an empty list to append calculated elevation into
+PointElevationList = [StartingElevation] # Creates an empty list to append calculated elevation into
 InstrumentHeightList = [] # Creates an empty list to append calculated height of instrument into
 
 for index in range(len(BacksightList)): # Creates an index within the range of the above inputs
@@ -219,8 +219,9 @@ for index in range(len(BacksightList)): # Creates an index within the range of t
 # Print a message indicating that the file was written successfully
 # Call the function to write the lists of values to a CSV file
 csv_output = write_to_csv(StationList, XList, YList, BacksightList, InstrumentHeightList, ForesightList, PointElevationList)
+print("Data in CSV format generated.")
 
 # Call function to create shapefile and export layout as PDF
 exportPDF()
 
-print("Data in CSV format generated.")
+
