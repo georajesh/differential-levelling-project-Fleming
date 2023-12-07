@@ -56,7 +56,7 @@ def write_to_csv(StationList, XList, YList, BacksightList, InstrumentHeightList,
             rowdict = {
                 'Station' : StationList[i],
                 'Longitude' : XList[i],
-                'Latitude' : YList[i],
+                'Latitude' : YList[j],
                 'Backsight': BacksightList[i],
                 'InstrumentHeight': InstrumentHeightList[i],
                 'Foresight': ForesightList[i],
@@ -118,6 +118,27 @@ def exportPDF():
 Year = str(input("Please Enter the year (YYYY)"))
 Month =str(input("Please Enter the Month (MM)"))
 Day = str(input("Please Enter the Day (DD)"))
+
+# Program to calculate the elevation of points using data acquired from a Vertical Survey.
+# Display purpose of Program
+
+print("Welcome!")
+print("Calculation of Elevation of unknown points using Vertical Survey data")
+
+#Metadata input from user
+
+ProjectName = []
+ProjectName = str(input("Please assign a name for the project: "))
+
+InstrumentName = []
+InstrumentName = str(input("Please assign a name for the instruments used for the survey: "))
+
+InsNumber = []
+InsNumber = str(input("Please number the instrument: "))
+
+WeatherCondition = []
+WeatherCondition = str(input("Please describe the weather in one or two words: "))
+
 
 ############## String Manipulation ###########
 
