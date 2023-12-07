@@ -257,7 +257,7 @@ print("Data in CSV format generated.")
 
 # coordinates_list = []
 
-# for i in range (min(len(Xlist),len(YList))):
+# for i in range (min(len(XList),len(YList))):
 #     coordinates_list.append((XList[i],YList[i]))
 
 # print(coordinates_list)
