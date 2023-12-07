@@ -253,38 +253,38 @@ exportPDF()
 print("Data in CSV format generated.")
 
 ################# Turtle ###########################
-#string manipulation for creating list of coordinates from XList and YList
+# #string manipulation for creating list of coordinates from XList and YList
 
-coordinates_list = []
+# coordinates_list = []
 
-for i in range (min(len(Xlist),len(YList))):
-    coordinates_list.append((XList[i],YList[i]))
+# for i in range (min(len(Xlist),len(YList))):
+#     coordinates_list.append((XList[i],YList[i]))
 
-print(coordinates_list)
+# print(coordinates_list)
 
-#import turtle module to draw traverse using turtle
-import turtle       
+# #import turtle module to draw traverse using turtle
+# import turtle       
 
-screen = turtle.Screen()
-screen.title("Vertical Survey Traverse")
+# screen = turtle.Screen()
+# screen.title("Vertical Survey Traverse")
 
-#Naming the turtle as "alex"
-alex = turtle.Turtle()
+# #Naming the turtle as "alex"
+# alex = turtle.Turtle()
 
-#Defining a function to draw the traverse
-def draw_traverse(x,y):
-    draw_traverse.goto(x,y)
+# #Defining a function to draw the traverse
+# def draw_traverse(x,y):
+#     draw_traverse.goto(x,y)
 
-#Positioning the turtle at the first point of the traverse
-alex.penup()
-alex.goto(coordinates_list[0])
-alex.pendown()
+# #Positioning the turtle at the first point of the traverse
+# alex.penup()
+# alex.goto(coordinates_list[0])
+# alex.pendown()
 
-#Drawing the traverse
-for point in coordinates_list[1:]:
-    draw_traverse(*point)
+# #Drawing the traverse
+# for point in coordinates_list[1:]:
+#     draw_traverse(*point)
 
-alex.hideturtle()
-screen.exitonclick()
-################# Turtle ###########################
-print("End of Program")
+# alex.hideturtle()
+# screen.exitonclick()
+# ################# Turtle ###########################
+# print("End of Program")
