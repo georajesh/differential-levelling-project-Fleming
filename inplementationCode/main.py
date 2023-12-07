@@ -27,8 +27,9 @@ import math                                 # 'math' is needed to run trignometr
 import csv                                  # '#csv' is needed to receive outputs as .csv file format
 import os                                   # 'os' is needed for getcwd (current working directory)
 import arcpy                                # arcpy is used for spatial outputs to be used on ArcGIS
-import string                                 #'import is needed for string manipulation 
-
+import string                               #'import is needed for string manipulation 
+import turtle                               # import turtle module to draw traverse using turtle
+       
 # A function to determine elevation and height of the instrument for surverying calculations
 def ElevationCalculator(BS, FS, SElev):
     Elev = SElev
@@ -245,3 +246,41 @@ csv_output = write_to_csv(StationList, XList, YList, BacksightList, InstrumentHe
 exportPDF()
 
 print("Data in CSV format generated.")
+
+################# Turtle ###########################
+#string manipulation for creating list of coordinates from XList and YList
+XList = []
+YList = []
+coordinates_list = []
+
+for i in range (min(len(Xlist),len(YList))):
+    coordinates_list.append((XList[i],YList[i]))
+
+print(coordinates_list)
+
+#import turtle module to draw traverse using turtle
+import turtle       
+
+screen = turtle.Screen()
+screen.title("Vertical Survey Traverse")
+
+#Naming the turtle as "alex"
+alex = turtle.Turtle()
+
+#Defining a function to draw the traverse
+def draw_traverse(x,y):
+    draw_traverse.goto(x,y)
+
+#Positioning the turtle at the first point of the traverse
+alex.penup()
+alex.goto(coordinates_list[0])
+alex.pendown()
+
+#Drawing the traverse
+for point in coordinates_list[1:]:
+    draw_traverse(*point)
+
+alex.hideturtle()
+screen.exitonclick()
+################# Turtle ###########################
+print("End of Program")
