@@ -131,14 +131,19 @@ print("Calculation of Elevation of unknown points using Vertical Survey data")
 ProjectName = []
 ProjectName = str(input("Please assign a name for the project: "))
 
-InstrumentName = []
-InstrumentName = str(input("Please assign a name for the instruments used for the survey: "))
-
-InsNumber = []
-InsNumber = str(input("Please number the instrument: "))
-
 WeatherCondition = []
 WeatherCondition = str(input("Please describe the weather in one or two words: "))
+
+
+#InsNumber = []
+#InsNumber = str(input("Please number the instrument: "))
+
+Year = str(input("Please Enter the year (YYYY): "))
+Month =str(input("Please Enter the Month (MM): "))
+Day = str(input("Please Enter the Day (DD): "))
+
+InstrumentName = []
+InstrumentName = str(input("Please assign a name for the instruments used for the survey: "))
 
 
 ############## String Manipulation ###########
