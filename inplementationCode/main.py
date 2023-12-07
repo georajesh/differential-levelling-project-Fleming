@@ -254,8 +254,7 @@ print("Data in CSV format generated.")
 
 ################# Turtle ###########################
 #string manipulation for creating list of coordinates from XList and YList
-XList = []
-YList = []
+
 coordinates_list = []
 
 for i in range (min(len(Xlist),len(YList))):
